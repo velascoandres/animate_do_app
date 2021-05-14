@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -42,15 +43,23 @@ class BottomNavigation extends StatelessWidget {
               Positioned(
                 top: 0.0,
                 right: 0.0,
-                child: Container(
-                  child: Text('$numero',
-                      style: TextStyle(color: Colors.white, fontSize: 9)),
-                  alignment: Alignment.center,
-                  width: 14,
-                  height: 14,
-                  decoration: BoxDecoration(
-                    color: Colors.redAccent,
-                    shape: BoxShape.circle,
+                child: BounceInDown(
+                  from: 10,
+                  animate: numero > 0,
+                  child: Bounce(
+                    from: 10,
+                    controller: (controller) => Provider.of<_NotificationModel>(context).bounceController = controller,
+                    child: Container(
+                      child: Text('$numero',
+                          style: TextStyle(color: Colors.white, fontSize: 9)),
+                      alignment: Alignment.center,
+                      width: 14,
+                      height: 14,
+                      decoration: BoxDecoration(
+                        color: Colors.redAccent,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
                   ),
                 ),
               )
@@ -88,10 +97,23 @@ class BotonFlotante extends StatelessWidget {
 
 class _NotificationModel extends ChangeNotifier {
   int _numero = 0;
+  AnimationController  _bounceController;
+
   int get numero => this._numero;
+  
+  AnimationController get bounceController => this._bounceController;
 
   set numero(int valor) {
     this._numero = valor;
+    if(this.numero >= 2){
+      this._bounceController.forward(from: 0.0);
+    }
     notifyListeners();
   }
+
+  set bounceController(AnimationController controller) {
+    this._bounceController = controller;
+    notifyListeners();
+  }
+
 }

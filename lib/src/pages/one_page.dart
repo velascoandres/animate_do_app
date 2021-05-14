@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:animate_do_app/src/pages/nagevacion_page.dart';
 import 'package:animate_do_app/src/pages/twitter_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +19,9 @@ class OnePage extends StatelessWidget {
             icon: FaIcon(FontAwesomeIcons.twitter),
             onPressed: () {
               Navigator.push(
-                  context,
-                  CupertinoPageRoute(builder: (_) => TwitterPage()),
-                );
+                context,
+                CupertinoPageRoute(builder: (_) => TwitterPage()),
+              );
             },
           ),
           SlideInLeft(
@@ -42,7 +43,12 @@ class OnePage extends StatelessWidget {
           child: FaIcon(
             FontAwesomeIcons.play,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (_) => NavegacionPage()),
+            );
+          },
         ),
       ),
       body: Center(

@@ -9,9 +9,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Material App',
+      title: 'Animate_do',
       debugShowCheckedModeBanner: false,
-      home: NavegacionPage()
+      home: OnePage()
     );
   }
 }
