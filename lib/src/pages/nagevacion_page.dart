@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class NavegacionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Notification Page'),
-        backgroundColor: Colors.pink,
+    return ChangeNotifierProvider(
+      create: (_) => new _NotificationModel(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Notification Page'),
+          backgroundColor: Colors.pink,
+        ),
+        floatingActionButton: BotonFlotante(),
+        bottomNavigationBar: BottomNavigation(),
       ),
-      floatingActionButton: BotonFlotante(),
-      bottomNavigationBar: BottomNavigation(),
     );
   }
 }
@@ -20,6 +24,8 @@ class BottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int numero = Provider.of<_NotificationModel>(context).numero;
+
     return BottomNavigationBar(
       currentIndex: 0,
       selectedItemColor: Colors.pink,
@@ -37,7 +43,8 @@ class BottomNavigation extends StatelessWidget {
                 top: 0.0,
                 right: 0.0,
                 child: Container(
-                  child: Text('1',style: TextStyle(color: Colors.white, fontSize: 9)),
+                  child: Text('$numero',
+                      style: TextStyle(color: Colors.white, fontSize: 9)),
                   alignment: Alignment.center,
                   width: 14,
                   height: 14,
@@ -65,11 +72,26 @@ class BotonFlotante extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () {},
+      onPressed: () {
+        final notificationProvier =
+            Provider.of<_NotificationModel>(context, listen: false);
+        int numero = notificationProvier.numero;
+        notificationProvier.numero = numero + 1;
+      },
       backgroundColor: Colors.pink,
       child: FaIcon(
         FontAwesomeIcons.play,
       ),
     );
+  }
+}
+
+class _NotificationModel extends ChangeNotifier {
+  int _numero = 0;
+  int get numero => this._numero;
+
+  set numero(int valor) {
+    this._numero = valor;
+    notifyListeners();
   }
 }
